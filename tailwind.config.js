@@ -22,6 +22,10 @@ module.exports = {
           400: '#002F32',
         }
       },
+      boxShadow: {
+        '4xl': '15px 15px 2px 0px rgba(0, 0, 0, 1.0)',
+        '4xl-green': '15px 15px 2px 0px rgba(0, 72, 47, 1.0)',
+      },
     },
   },
   plugins: [],

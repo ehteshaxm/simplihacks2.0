@@ -1,6 +1,9 @@
 import Button from "../Button";
+import { useRouter } from "next/router";
 
 const Cta = () => {
+  const router = useRouter();
+
   return (
     <div className="py-20">
       <div className="container px-12">
@@ -14,7 +17,12 @@ const Cta = () => {
               Suspendisse varius enim in eros elementum tristique. . Suspendisse
               varius enim in
             </p>
-            <Button className="mt-8 px-10 py-3">Get Started</Button>
+            <Button
+              className="mt-8 px-10 py-3"
+              onClick={() => router.push("/signin")}
+            >
+              Get Started
+            </Button>
           </div>
           <div className="">
             <img className="w-80" src="/tree.png" alt="tree" />

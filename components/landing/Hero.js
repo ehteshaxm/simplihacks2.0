@@ -1,8 +1,11 @@
-import Navbar from './Navbar';
-import Image from 'next/image';
-import Button from '../Button';
+import Navbar from "./Navbar";
+import Image from "next/image";
+import Button from "../Button";
+import { useRouter } from "next/router";
 
 const Hero = () => {
+  const router = useRouter();
+
   return (
     <div className='relative' id='home'>
       <div className='absolute top-0 left-0 -z-10 h-screen w-full'>
@@ -26,7 +29,12 @@ const Hero = () => {
             Design Maestro is a free extension for Keyboard Maestro app. It lets
             you automate tasks that you repeat hundreds of times each day.
           </p>
-          <Button className='mt-10 px-10 py-3'>Start Helping</Button>
+          <Button
+            className="mt-10 px-10 py-3"
+            onClick={() => router.push("/signin")}
+          >
+            Start Helping
+          </Button>
         </div>
       </div>
     </div>

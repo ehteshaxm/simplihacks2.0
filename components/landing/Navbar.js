@@ -1,6 +1,9 @@
 import Button from "../Button";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const router = useRouter();
+
   return (
     <header className="flex justify-between items-center py-8">
       <div className="">
@@ -18,7 +21,9 @@ const Navbar = () => {
             <a href="#why">Why Us</a>
           </li>
         </ul>
-        <Button className="px-6 py-2">Get Started</Button>
+        <Button className="px-6 py-2" onClick={() => router.push("/signin")}>
+          Get Started
+        </Button>
       </div>
     </header>
   );

@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
+import Footer from './landing/Footer';
 
-const NavWrapper = () => {
+const NavWrapper = ({ children }) => {
   return (
     <div>
       <div className='container mx-auto py-4 flex justify-between items-center font-body'>
@@ -21,6 +22,8 @@ const NavWrapper = () => {
           </div>
         </div>
       </div>
+      {children}
+      <Footer />
     </div>
   );
 };

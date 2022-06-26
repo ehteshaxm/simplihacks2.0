@@ -41,7 +41,7 @@ const Coupon = ({
             isBought: true,
           });
 
-          router.push('/coupons');
+          window.location.reload();
         }
       } catch (error) {
         console.log(error);

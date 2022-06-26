@@ -1,11 +1,20 @@
+import { useState } from 'react';
 import NavWrapper from '../../components/NavWrapper';
 import { getFirestore, doc } from 'firebase/firestore';
 import { useDocument } from 'react-firebase-hooks/firestore';
 import { app } from '../../firebase/clientApp';
 import { useRouter } from 'next/router';
+import cryptolearn from '../../eth/cryptolearn';
 
 const Event = () => {
   const router = useRouter();
+
+  const [code, setCode] = useState('');
+
+  const onChangeHandler = (e) => {
+    let newCode = code.concat(e.target.value);
+    setCode(newCode);
+  };
 
   const [value, loading, error] = useDocument(
     doc(getFirestore(app), 'events', router.query.id),
@@ -14,9 +23,34 @@ const Event = () => {
     }
   );
 
-  if (value) {
-    console.log(value.data());
-  }
+  const onClickHandler = async () => {
+    const { ethereum } = window;
+
+    if (!ethereum) {
+      alert(
+        'Metamask not detected. Please try again from a Metamask enabled browser.'
+      );
+      return;
+    }
+
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+    if (accounts[0]) {
+      if (value.data().code === code) {
+        try {
+          const response = await cryptolearn.methods.giveToken(20).send({
+            from: accounts[0],
+          });
+
+          if (response) {
+            router.push('/events');
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
 
   return (
     <div>
@@ -106,14 +140,17 @@ const Event = () => {
                 <h2 className='text-3xl font-medium'>Code</h2>
                 <div className='w-3/5 mx-auto mt-20 flex justify-around items-center'>
                   <input
+                    onChange={onChangeHandler}
                     style={{ boxShadow: '10px 10px #000000' }}
                     className='border-2 border-black rounded h-28 w-24 text-7xl text-center'
                   />
                   <input
+                    onChange={onChangeHandler}
                     style={{ boxShadow: '10px 10px #000000' }}
                     className='border-2 border-black rounded h-28 w-24 text-7xl text-center'
                   />
                   <input
+                    onChange={onChangeHandler}
                     style={{ boxShadow: '10px 10px #000000' }}
                     className='border-2 border-black rounded h-28 w-24 text-7xl text-center'
                   />
@@ -132,20 +169,26 @@ const Event = () => {
                     />
                   </svg>
                   <input
+                    onChange={onChangeHandler}
                     style={{ boxShadow: '10px 10px #000000' }}
                     className='border-2 border-black rounded h-28 w-24 text-7xl text-center'
                   />
                   <input
+                    onChange={onChangeHandler}
                     style={{ boxShadow: '10px 10px #000000' }}
                     className='border-2 border-black rounded h-28 w-24 text-7xl text-center'
                   />
                   <input
+                    onChange={onChangeHandler}
                     style={{ boxShadow: '10px 10px #000000' }}
                     className='border-2 border-black rounded h-28 w-24 text-7xl text-center'
                   />
                 </div>
                 <div className='w-3/5 mx-auto mt-14 flex flex-row-reverse'>
-                  <button className='w-1/5 bg-app-yellow rounded-md p-3 font-medium text-lg flex items-center justify-center'>
+                  <button
+                    onClick={onClickHandler}
+                    className='w-1/5 bg-app-yellow rounded-md p-3 font-medium text-lg flex items-center justify-center'
+                  >
                     Submit
                   </button>
                 </div>

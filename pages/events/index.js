@@ -1,6 +1,6 @@
 import { getFirestore, collection } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import app from '../../firebase/clientApp';
+import { app } from '../../firebase/clientApp';
 import NavWrapper from '../../components/NavWrapper';
 import EventCard from '../../components/events/EventCard';
 

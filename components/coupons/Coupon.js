@@ -1,4 +1,6 @@
-import { useState, useEffect } from 'react';
+import { db } from '../../firebase/clientApp';
+import cryptolearn from '../../eth/cryptolearn';
+import { doc, updateDoc } from 'firebase/firestore';
 
 const Coupon = ({
   name,
@@ -10,10 +12,42 @@ const Coupon = ({
   bgColor,
   bgImage,
   bg,
+  isBought,
+  id,
 }) => {
-  const [imageWidth, setImageWidth] = useState('');
+  const onClickHandler = async () => {
+    const { ethereum } = window;
 
-  console.log(bg);
+    if (!ethereum) {
+      alert(
+        'Metamask not detected. Please try again from a Metamask enabled browser.'
+      );
+      return;
+    }
+
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+    if (accounts[0]) {
+      try {
+        const response = await cryptolearn.methods.transact(value).send({
+          from: accounts[0],
+        });
+
+        if (response) {
+          const coupon = doc(db, 'coupons', id);
+
+          // Set the "capital" field of the city 'DC'
+          await updateDoc(coupon, {
+            isBought: true,
+          });
+
+          router.push('/coupons');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <div
@@ -62,17 +96,25 @@ const Coupon = ({
         </div>
         <div className='flex items-end justify-between px-4 mb-2'>
           {value && <img src={barcode} className={`w-2/4 mr-12 -ml-8 pl-4`} />}
-
-          {/* <div
-            style={{ color: '#09203F', width: '200px' }}
-            className='font-body font-bold px-3 flex items-end justify-between'
-          >
-            <p className='mr-4'>{value} C</p>
-            <p className='hover:text-blue-800 cursor-pointer'>REDEEM</p>
-          </div> */}
-          <div className='bg-white border-2 border-dashed border-black px-3 py-1 mr-7 mb-5 font-body font-semibold text-lg'>
-            {code}
-          </div>
+          {value && !isBought && (
+            <div
+              style={{ color: '#09203F', width: '200px' }}
+              className='font-body font-bold px-3 flex items-end justify-between'
+            >
+              <p className='mr-4'>{value} C</p>
+              <p
+                onClick={onClickHandler}
+                className='hover:text-blue-800 cursor-pointer'
+              >
+                REDEEM
+              </p>
+            </div>
+          )}
+          {value && isBought && (
+            <div className='bg-white border-2 border-dashed border-black px-3 py-1 mr-7 mb-5 font-body font-semibold text-lg'>
+              {code}
+            </div>
+          )}
         </div>
       </div>
     </div>

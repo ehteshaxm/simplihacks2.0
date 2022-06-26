@@ -1,6 +1,6 @@
 import { getFirestore, collection } from 'firebase/firestore';
 import { useCollection } from 'react-firebase-hooks/firestore';
-import app from '../../firebase/clientApp';
+import { app } from '../../firebase/clientApp';
 import NavWrapper from '../../components/NavWrapper';
 import Coupon from '../../components/coupons/Coupon';
 
@@ -32,6 +32,8 @@ const Coupons = () => {
                     bgColor={coupon.bgColor}
                     bgImage={coupon.bgImage}
                     bg={coupon.bg}
+                    isBought={coupon.isBought}
+                    id={doc.id}
                   />
                 );
               })}

@@ -5,7 +5,7 @@ import Footer from './landing/Footer';
 import cryptolearn from '../eth/cryptolearn';
 
 const NavWrapper = ({ children }) => {
-  const [coins, setCoins] = useState(20);
+  const [coins, setCoins] = useState(0);
 
   useEffect(() => {
     const getTokens = async () => {

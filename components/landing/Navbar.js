@@ -6,8 +6,8 @@ const Navbar = () => {
 
   return (
     <header className="flex justify-between items-center py-8">
-      <div className="">
-        <h1>Earthcoin</h1>
+      <div className="flex items-center">
+        <img className="w-40" src="/logo-light.png" alt="logo" />
       </div>
       <div className="flex gap-12 items-center">
         <ul className="flex gap-8 font-medium z-10 relative">

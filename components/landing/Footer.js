@@ -6,8 +6,8 @@ const Footer = () => {
     <div className="py-10 bg-app-green-400 text-white border-b-2 border-app-yellow">
       <div className="container px-12">
         <div className="flex justify-between items-center border-b border-white py-10">
-          <div className="">
-            <h1 className="text-2xl">Earthcoin</h1>
+          <div className="flex items-center">
+            <img className="w-40" src="/logo-dark.png" alt="logo" />
           </div>
           <div className="">
             <ul className="flex gap-8 text-sm z-10 relative">
